@@ -6,8 +6,10 @@ import App from './App.vue'
 import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 import 'uno.css'
-
+import { createPinia } from 'pinia'
+const pinia = createPinia()
 const app = createApp(App)
+app.use(pinia)
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,

@@ -1,0 +1,71 @@
+.el-loading-mask {
+  background-color: rgb(28 30 38 / 41%)
+}
+
+.el-form {
+  caret-color: white;
+
+  .el-form-item__label {
+    font-size: 16rem;
+  }
+
+  .el-form-item__label {
+    color: white;
+  }
+
+  .el-input__wrapper {
+    background: #0b163a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: none;
+  }
+
+  .el-input__inner {
+    color: white;
+    height: 50rem;
+    line-height: 50rem;
+    font-size: 16rem;
+  }
+
+  .el-textarea__inner {
+    color: white;
+    background: #0b163a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 16rem;
+    box-shadow: none;
+  }
+
+  .el-form-item__error {
+    font-size: 16rem;
+  }
+
+  .el-form-item.is-required:not(.is-no-asterisk).asterisk-left>.el-form-item__label-wrap>.el-form-item__label:before,
+  .el-form-item.is-required:not(.is-no-asterisk).asterisk-left>.el-form-item__label:before {
+    content: '*';
+    color: #27f2bd !important;
+    margin-right: 4px;
+  }
+
+  .el-radio__label {
+    color: white;
+  }
+
+  .el-checkbox__label {
+    color: white;
+  }
+
+  .el-checkbox__inner {
+    background: transparent;
+  }
+
+  .el-radio__inner {
+    background: transparent;
+  }
+
+  .el-select--large {
+    width: 100%;
+  }
+
+  .el-checkbox--large {
+    width: 100%;
+  }
+}

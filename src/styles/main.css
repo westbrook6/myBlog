@@ -9,3 +9,15 @@ body,
 html.dark {
   background: #121212;
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgb(134 134 134 / 54%);
+}
+::-webkit-scrollbar-track {
+  border-radius: 0;
+  background: transparent;
+}

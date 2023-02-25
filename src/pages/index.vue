@@ -1,14 +1,54 @@
 <script setup lang="ts" generic="T extends any, O extends any">
 import userImg from '~/assets/home/user.jpg'
+import {useFetchHomes} from '~/api/home'
+import { Attachment } from '~/api/media'
 defineOptions({
   name: 'IndexPage'
 })
 const router = useRouter()
-
-const handleClickItem = (homeHndex: any) => {
-  router.replace('/home/' + homeHndex.slug)
-}
-
+const fileList = ref<Attachment[]>([])
+const formData = ref<{
+  id?: string
+  name?: string
+  description?: string
+  avatar?: string
+}>({
+  name: '',
+  description: '',
+  avatar: ''
+})
+const {
+  result,
+  fetch: fetchList,
+  loading,
+  onSuccess
+} = useFetchHomes(
+  computed(()=>{
+    return {
+      page:1,
+      pageSize:999
+    }
+  })
+)
+fetchList()
+onSuccess(() => {
+  const logoData = result.value?.data?.[0]?.attributes?.avatar
+  const resData = result.value?.data?.[0].attributes
+  if (logoData?.data) {
+    fileList.value = [
+      {
+        id: logoData?.data.id,
+        url: import.meta.env.VITE_DMS_HOST + logoData?.data.attributes.url
+      }
+    ]
+  }
+  formData.value.avatar = logoData?.data.attributes.url
+  formData.value.name = resData?.name
+  formData.value.description = resData?.description
+})
+const avatarUrl = computed(() => {
+  return import.meta.env.VITE_DMS_HOST + formData.value.avatar
+})
 onMounted(() => {
   document.title = `Russell's Blog`
 })
@@ -23,27 +63,22 @@ onMounted(() => {
     <div class="sides"> <a href="#" class="menu"> </a></div>
     
     <div class="info">
-      <h4><a href="#category"><el-avatar :size="50" :src="userImg" /></a></h4>
-      <h1>KEN BURNS HEADERS ARE THE BEST</h1>
+      <h4><a href="#category"><el-avatar :size="50" :src="avatarUrl" /></a></h4>
+      <h1>ENJOY CODING, WHY NOT ?</h1>
       <div class="meta">
 
-        By <a href="https://github.com/westbrook6" target="_b">russell</a> on May 7, 2023
+        By <a href="https://github.com/westbrook6" target="_b">{{ formData.name }}</a> on May 7, 2023
       </div>
     </div>
   </div>
   <section class="content">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisl turpis, porttitor et finibus id, viverra a metus.
-      Praesent non ante sed orci posuere varius quis sit amet dui. Cras molestie magna orci, id gravida dolor molestie in.
-      Duis sollicitudin turpis quis tortor egestas, ut ultrices nisl elementum. Vestibulum sed ipsum eget nulla laoreet
-      cursus in ac sem. Integer a suscipit justo, quis aliquam sapien. Maecenas et tellus nibh. Vivamus tincidunt eros id
-      commodo pellentesque.</p>
+    <p>{{ formData.description }}</p>
     <p align="center"> <a href="https://github.com/westbrook6" class="btn2 twtr" target="_b">Follow me on
         Github</a>
     </p>
   </section>
 </template>
 <style  scoped>
-@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:400,400i,600,600i');
 
 html,
 body {
@@ -94,7 +129,7 @@ a {
   -webkit-transform: translateZ(0);
   backface-visibility: hidden;
   transform: translateZ(0);
-  background: #1B2030 url(https://images.unsplash.com/photo-1571993142257-eae0b44cf0f1?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ) 50% 0 no-repeat;
+  background: #1B2030 url(~/assets/home/home.png) 50% 0 no-repeat;
   background-size: 100%;
   background-attachment: fixed;
   animation: grow 360s linear 10ms infinite;
@@ -151,7 +186,8 @@ a {
 .sides,
 .info {
   flex: 0 0 auto;
-  width: 50%
+  width: 50%;
+  margin-bottom: 10px;
 }
 
 .info {
@@ -166,7 +202,6 @@ a {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: url(https://i.imgur.com/6DLCsZcb.jpg) center no-repeat;
   background-size: cover;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
   margin-bottom: 3px

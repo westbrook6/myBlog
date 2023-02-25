@@ -17,6 +17,7 @@
     "apollo": "^2.34.0",
     "element-plus": "^2.2.32",
     "pinia": "^2.0.32",
+    "qs": "^6.11.0",
     "swiper": "^9.0.5",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
@@ -25,6 +26,7 @@
     "@antfu/eslint-config": "^0.34.1",
     "@iconify-json/carbon": "^1.1.13",
     "@types/node": "^18.11.18",
+    "@types/qs": "^6.9.7",
     "@unocss/reset": "^0.48.4",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue-macros/volar": "^0.5.15",

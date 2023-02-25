@@ -121,8 +121,11 @@ declare global {
   const useAsyncState: typeof import('@vueuse/core')['useAsyncState']
   const useAttrs: typeof import('vue')['useAttrs']
   const useBase64: typeof import('@vueuse/core')['useBase64']
+  const useBatchMutate: typeof import('./src/composables/useGqlRequest')['useBatchMutate']
   const useBattery: typeof import('@vueuse/core')['useBattery']
   const useBluetooth: typeof import('@vueuse/core')['useBluetooth']
+  const useBoolean: typeof import('./src/composables/useBoolean')['useBoolean']
+  const useBooleanWrap: typeof import('./src/composables/useBoolean')['useBooleanWrap']
   const useBreakpoints: typeof import('@vueuse/core')['useBreakpoints']
   const useBroadcastChannel: typeof import('@vueuse/core')['useBroadcastChannel']
   const useBrowserLocation: typeof import('@vueuse/core')['useBrowserLocation']
@@ -155,6 +158,7 @@ declare global {
   const useElementHover: typeof import('@vueuse/core')['useElementHover']
   const useElementSize: typeof import('@vueuse/core')['useElementSize']
   const useElementVisibility: typeof import('@vueuse/core')['useElementVisibility']
+  const useError: typeof import('./src/composables/useError')['useError']
   const useEventBus: typeof import('@vueuse/core')['useEventBus']
   const useEventListener: typeof import('@vueuse/core')['useEventListener']
   const useEventSource: typeof import('@vueuse/core')['useEventSource']
@@ -172,6 +176,7 @@ declare global {
   const useIdle: typeof import('@vueuse/core')['useIdle']
   const useImage: typeof import('@vueuse/core')['useImage']
   const useInfiniteScroll: typeof import('@vueuse/core')['useInfiniteScroll']
+  const useInjectToast: typeof import('./src/composables/useToast')['useInjectToast']
   const useIntersectionObserver: typeof import('@vueuse/core')['useIntersectionObserver']
   const useInterval: typeof import('@vueuse/core')['useInterval']
   const useIntervalFn: typeof import('@vueuse/core')['useIntervalFn']
@@ -189,6 +194,7 @@ declare global {
   const useMouse: typeof import('@vueuse/core')['useMouse']
   const useMouseInElement: typeof import('@vueuse/core')['useMouseInElement']
   const useMousePressed: typeof import('@vueuse/core')['useMousePressed']
+  const useMutate: typeof import('./src/composables/useApollo')['useMutate']
   const useMutationObserver: typeof import('@vueuse/core')['useMutationObserver']
   const useNavigatorLanguage: typeof import('@vueuse/core')['useNavigatorLanguage']
   const useNetwork: typeof import('@vueuse/core')['useNetwork']
@@ -207,8 +213,11 @@ declare global {
   const usePreferredDark: typeof import('@vueuse/core')['usePreferredDark']
   const usePreferredLanguages: typeof import('@vueuse/core')['usePreferredLanguages']
   const usePreferredReducedMotion: typeof import('@vueuse/core')['usePreferredReducedMotion']
+  const useQuery: typeof import('./src/composables/useApollo')['useQuery']
   const useRafFn: typeof import('@vueuse/core')['useRafFn']
   const useRefHistory: typeof import('@vueuse/core')['useRefHistory']
+  const useRequest: typeof import('./src/composables/useGqlRequest')['useRequest']
+  const useRequestWrap: typeof import('./src/composables/useGqlRequest')['useRequestWrap']
   const useResizeObserver: typeof import('@vueuse/core')['useResizeObserver']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']
@@ -244,6 +253,7 @@ declare global {
   const useTitle: typeof import('@vueuse/core')['useTitle']
   const useToNumber: typeof import('@vueuse/core')['useToNumber']
   const useToString: typeof import('@vueuse/core')['useToString']
+  const useToast: typeof import('./src/composables/useToast')['useToast']
   const useToggle: typeof import('@vueuse/core')['useToggle']
   const useTransition: typeof import('@vueuse/core')['useTransition']
   const useUrlSearchParams: typeof import('@vueuse/core')['useUrlSearchParams']
@@ -399,8 +409,11 @@ declare module 'vue' {
     readonly useAsyncState: UnwrapRef<typeof import('@vueuse/core')['useAsyncState']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useBase64: UnwrapRef<typeof import('@vueuse/core')['useBase64']>
+    readonly useBatchMutate: UnwrapRef<typeof import('./src/composables/useGqlRequest')['useBatchMutate']>
     readonly useBattery: UnwrapRef<typeof import('@vueuse/core')['useBattery']>
     readonly useBluetooth: UnwrapRef<typeof import('@vueuse/core')['useBluetooth']>
+    readonly useBoolean: UnwrapRef<typeof import('./src/composables/useBoolean')['useBoolean']>
+    readonly useBooleanWrap: UnwrapRef<typeof import('./src/composables/useBoolean')['useBooleanWrap']>
     readonly useBreakpoints: UnwrapRef<typeof import('@vueuse/core')['useBreakpoints']>
     readonly useBroadcastChannel: UnwrapRef<typeof import('@vueuse/core')['useBroadcastChannel']>
     readonly useBrowserLocation: UnwrapRef<typeof import('@vueuse/core')['useBrowserLocation']>
@@ -433,6 +446,7 @@ declare module 'vue' {
     readonly useElementHover: UnwrapRef<typeof import('@vueuse/core')['useElementHover']>
     readonly useElementSize: UnwrapRef<typeof import('@vueuse/core')['useElementSize']>
     readonly useElementVisibility: UnwrapRef<typeof import('@vueuse/core')['useElementVisibility']>
+    readonly useError: UnwrapRef<typeof import('./src/composables/useError')['useError']>
     readonly useEventBus: UnwrapRef<typeof import('@vueuse/core')['useEventBus']>
     readonly useEventListener: UnwrapRef<typeof import('@vueuse/core')['useEventListener']>
     readonly useEventSource: UnwrapRef<typeof import('@vueuse/core')['useEventSource']>
@@ -450,6 +464,7 @@ declare module 'vue' {
     readonly useIdle: UnwrapRef<typeof import('@vueuse/core')['useIdle']>
     readonly useImage: UnwrapRef<typeof import('@vueuse/core')['useImage']>
     readonly useInfiniteScroll: UnwrapRef<typeof import('@vueuse/core')['useInfiniteScroll']>
+    readonly useInjectToast: UnwrapRef<typeof import('./src/composables/useToast')['useInjectToast']>
     readonly useIntersectionObserver: UnwrapRef<typeof import('@vueuse/core')['useIntersectionObserver']>
     readonly useInterval: UnwrapRef<typeof import('@vueuse/core')['useInterval']>
     readonly useIntervalFn: UnwrapRef<typeof import('@vueuse/core')['useIntervalFn']>
@@ -467,6 +482,7 @@ declare module 'vue' {
     readonly useMouse: UnwrapRef<typeof import('@vueuse/core')['useMouse']>
     readonly useMouseInElement: UnwrapRef<typeof import('@vueuse/core')['useMouseInElement']>
     readonly useMousePressed: UnwrapRef<typeof import('@vueuse/core')['useMousePressed']>
+    readonly useMutate: UnwrapRef<typeof import('./src/composables/useApollo')['useMutate']>
     readonly useMutationObserver: UnwrapRef<typeof import('@vueuse/core')['useMutationObserver']>
     readonly useNavigatorLanguage: UnwrapRef<typeof import('@vueuse/core')['useNavigatorLanguage']>
     readonly useNetwork: UnwrapRef<typeof import('@vueuse/core')['useNetwork']>
@@ -485,8 +501,11 @@ declare module 'vue' {
     readonly usePreferredDark: UnwrapRef<typeof import('@vueuse/core')['usePreferredDark']>
     readonly usePreferredLanguages: UnwrapRef<typeof import('@vueuse/core')['usePreferredLanguages']>
     readonly usePreferredReducedMotion: UnwrapRef<typeof import('@vueuse/core')['usePreferredReducedMotion']>
+    readonly useQuery: UnwrapRef<typeof import('./src/composables/useApollo')['useQuery']>
     readonly useRafFn: UnwrapRef<typeof import('@vueuse/core')['useRafFn']>
     readonly useRefHistory: UnwrapRef<typeof import('@vueuse/core')['useRefHistory']>
+    readonly useRequest: UnwrapRef<typeof import('./src/composables/useGqlRequest')['useRequest']>
+    readonly useRequestWrap: UnwrapRef<typeof import('./src/composables/useGqlRequest')['useRequestWrap']>
     readonly useResizeObserver: UnwrapRef<typeof import('@vueuse/core')['useResizeObserver']>
     readonly useRoute: UnwrapRef<typeof import('vue-router')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('vue-router')['useRouter']>
@@ -522,6 +541,7 @@ declare module 'vue' {
     readonly useTitle: UnwrapRef<typeof import('@vueuse/core')['useTitle']>
     readonly useToNumber: UnwrapRef<typeof import('@vueuse/core')['useToNumber']>
     readonly useToString: UnwrapRef<typeof import('@vueuse/core')['useToString']>
+    readonly useToast: UnwrapRef<typeof import('./src/composables/useToast')['useToast']>
     readonly useToggle: UnwrapRef<typeof import('@vueuse/core')['useToggle']>
     readonly useTransition: UnwrapRef<typeof import('@vueuse/core')['useTransition']>
     readonly useUrlSearchParams: UnwrapRef<typeof import('@vueuse/core')['useUrlSearchParams']>

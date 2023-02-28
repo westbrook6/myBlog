@@ -1,6 +1,7 @@
 <script setup lang="ts" generic="T extends any, O extends any">
 import userImg from '~/assets/home/user.jpg'
-import {useFetchHomes} from '~/api/home'
+import { useFetchHomes } from '~/api/home'
+import {useFetchCategories} from '~/api/category'
 import { Attachment } from '~/api/media'
 defineOptions({
   name: 'IndexPage'
@@ -23,10 +24,10 @@ const {
   loading,
   onSuccess
 } = useFetchHomes(
-  computed(()=>{
+  computed(() => {
     return {
-      page:1,
-      pageSize:999
+      page: 1,
+      pageSize: 999
     }
   })
 )
@@ -49,19 +50,47 @@ onSuccess(() => {
 const avatarUrl = computed(() => {
   return import.meta.env.VITE_DMS_HOST + formData.value.avatar
 })
+const {
+  result:categoryRes,
+  fetch: fetchCategories,
+} = useFetchCategories(
+  computed(() => {
+    return {
+      page: 1,
+      pageSize: 999
+    }
+  })
+)
+fetchCategories()
+const menuData = computed(()=>{
+  return categoryRes.value?.data
+})
 onMounted(() => {
   document.title = `Russell's Blog`
 })
-
+const goBlog = () => {
+  router.push({
+    path: '/menu/article'
+  })
+}
+const goMenu = ((menu: any)=>{
+  router.push({
+    path: `/menu/${menu.attributes.name}`,
+  })
+})
 </script>
 
 <template>
   <div class="header">
     <div class="sides">
-      <a href="" class="logo">BLOG</a>
+      <a class="logo" @click="goBlog()">BLOG</a>
     </div>
-    <div class="sides"> <a href="#" class="menu"> </a></div>
-    
+    <div class="sides" >
+      <div href="#" class="menu" v-for="(item,index) in menuData" :key="index" >
+        <div class="s" @click="goMenu(item)">{{ item.attributes.name }}</div>
+      </div>
+    </div>
+
     <div class="info">
       <h4><a href="#category"><el-avatar :size="50" :src="avatarUrl" /></a></h4>
       <h1>ENJOY CODING, WHY NOT ?</h1>
@@ -79,7 +108,6 @@ onMounted(() => {
   </section>
 </template>
 <style  scoped>
-
 html,
 body {
   margin: 0;
@@ -141,33 +169,8 @@ a {
   color: #eee
 }
 
-.menu {
-  display: block;
-  width: 40px;
-  height: 30px;
-  border: 2px solid #fff;
-  border-radius: 3px;
-  position: absolute;
-  right: 20px;
-  top: 20px;
-  text-decoration: none
-}
-
-.menu:after {
-  content: "";
-  display: block;
-  width: 20px;
-  height: 3px;
-  background: #fff;
-  position: absolute;
-  margin: 0 auto;
-  top: 5px;
-  left: 0;
-  right: 0;
-  box-shadow: 0 8px, 0 16px
-}
-
-.logo {
+.logo
+ {
   border: 2px solid #fff;
   border-radius: 3px;
   text-decoration: none;
@@ -181,6 +184,22 @@ a {
   line-height: 1;
   box-sizing: border-box;
   height: 40px
+}
+.menu {
+  border: 1px solid #fff;
+  border-radius: 3px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  align-content: center;
+  margin: 10px;
+  padding: 0px 10px;
+  font-weight: 900;
+  font-size: 1.1em;
+  line-height: 1;
+  box-sizing: border-box;
+  height: 40px;
+  color: #fff
 }
 
 .sides,

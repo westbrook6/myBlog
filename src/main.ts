@@ -25,7 +25,9 @@ const httpLink = createHttpLink({
 
 // Cache implementation
 const cache = new InMemoryCache()
-
+onMounted(() => {
+  document.title = `Russell's Blog`
+})
 // Create the apollo client
 const apolloClient = new ApolloClient({
   link: httpLink,

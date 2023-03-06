@@ -9,6 +9,7 @@ export default gql`
           username
           email
           createdAt
+          permissions
         }
       }
     }

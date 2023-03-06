@@ -1,21 +1,9 @@
 <template>
-  <div
-    class="my-button"
-    :class="{ 'full-width': fullWidth, disabled: disabled }"
-    v-loading="loading"
-    :style="getStyle"
-  >
-    <div class="btn-wrap">
-      <slot name="icon">
-        <img :src="backImg" class="back" v-if="props.type === 'back'" />
-      </slot>
-      <slot>{{ label }}</slot>
-    </div>
-  </div>
+      <button class="custom-btn btn-16">
+        <slot>{{ label }}</slot>
+      </button>
 </template>
 <script lang="ts" setup>
-import backImg from '~/assets/img/layout/back.png'
-
 const props = withDefaults(
   defineProps<{
     label?: string
@@ -35,58 +23,53 @@ const props = withDefaults(
     fullWidth: false
   }
 )
-
-const getStyle = computed(() => {
-  if (props.type === 'success') {
-    return {
-      background: 'linear-gradient(90deg, #33c8ce 0%, #138e93 96%)'
-    }
-  }
-  return {
-    background: 'rgba(17, 42, 73, 0.6)'
-  }
-})
 </script>
 <style lang="scss" scoped>
-.my-button {
-  display: inline-block;
-  width: 130rem;
-  height: 50rem;
-  border-radius: 136rem;
-  overflow: hidden;
+.custom-btn {
+  width: 120px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
   cursor: pointer;
-  background: linear-gradient(90deg, #BBC0C0 0%, #CFD8D8 96%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  .btn-wrap {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16rem;
-    color: rgb(43, 42, 42);
-  }
-  .back {
-    width: 24rem;
-    height: 24rem;
-    margin-right: 4rem;
-  }
-  &.full-width {
-    display: block;
-    ion-button {
-      width: 100%;
-    }
-  }
-  &.disabled {
-    pointer-events: none;
-    opacity: 0.7;
-  }
-  &:active {
-    opacity: 0.7 !important;
-  }
-  &.loading {
-    pointer-events: none;
-    opacity: 0.7;
-  }
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+.btn-16 {
+  border: none;
+  color: #000;
+  text-align: center;
+}
+.btn-16:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 100%;
+  top: 0;
+  left: 0;
+  direction: rtl;
+  z-index: -1;
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  transition: all 0.3s ease;
+}
+.btn-16:hover {
+  color: #000;
+}
+.btn-16:hover:after {
+  left: auto;
+  right: 0;
+  width: 100%;
 }
 </style>

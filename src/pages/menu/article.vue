@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useFetchArticles } from '~/api/article'
+const router = useRouter()
 const {
   result,
   fetch,
@@ -23,12 +24,26 @@ const articleData = computed(() => {
   }
   return []
 })
+const goDetail = (articleId:any)=>{
+  router.push({
+    path: '/detailArticle',
+    query: {
+      id: articleId.id
+    }
+  })
+}
+const goHome = ()=>{
+  router.push({
+    path: '/',
+  })
+}
 </script>
 <template>
+  <MyButton class="backBtn" @click="goHome()">home</MyButton>
   <h1>Article</h1>
   <p>enjoy it!</p>
   <section class="main">
-    <div class="wrap wrap--3"  v-for="(item,index) in articleData" :key="index">
+    <div class="wrap wrap--3" @click="goDetail(item)"  v-for="(item,index) in articleData" :key="index">
       <div class="container container--3">
         <h2>{{ item.title }}</h2>
         <p>{{ item.subTitle }}</p>
@@ -182,5 +197,10 @@ h1+p {
   left: 20px;
   color: hsla(0, 0%, 0%, .6);
   font-size: 1.6rem;
+}
+.backBtn{
+  position: fixed;
+  top: 20px;
+  left: 20px;
 }
 </style>

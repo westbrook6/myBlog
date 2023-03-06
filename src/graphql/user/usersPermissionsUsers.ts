@@ -11,6 +11,7 @@ export default gql`
         attributes {
           username
           email
+          permissions
           createdAt
         }
       }

@@ -183,7 +183,11 @@ a {
   font-size: 1.1em;
   line-height: 1;
   box-sizing: border-box;
-  height: 40px
+  height: 40px;
+  cursor: pointer;
+}
+.logo:hover {
+  border: 2px solid #5C5959;
 }
 .menu {
   border: 1px solid #fff;
@@ -199,7 +203,11 @@ a {
   line-height: 1;
   box-sizing: border-box;
   height: 40px;
-  color: #fff
+  color: #fff;
+  cursor: pointer;
+}
+.menu:hover {
+  border: 1px solid #5C5959
 }
 
 .sides,

@@ -7,6 +7,8 @@ import {
 } from '~/api/article'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import '@wangeditor/editor/dist/css/style.css'
+import { Attachment } from '~/api/media'
+import { usePost } from '~/composables/useAxios'
 
 const props = withDefaults(
   defineProps<{ visible: boolean; editId: string }>(),
@@ -23,10 +25,13 @@ const formData = ref({
   content: ''
 })
 
+const fileList = ref<Attachment[]>([])
+const flieUploading = ref(false)
+
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef()
 const toolbarConfig = {
-  excludeKeys: ['codeBlock', 'insertVideo'],
+  excludeKeys: ['codeBlock'],
   insertKeys: {
     index: 1,
     keys: ['fontSize']
@@ -37,14 +42,12 @@ const editorConfig = {
   MENU_CONF: {
     uploadImage: {
       fieldName: 'files',
-      server: import.meta.env.VITE_HOST_URL + '/api/upload',
+      maxFileSize: 50 * 1024 * 1024,
+      server: import.meta.env.VITE_DMS_HOST + '/api/upload',
       maxNumberOfFiles: 1,
-      headers: {
-        Authorization: 'Bearer ' + sessionStorage.getItem('token')
-      },
       customInsert(res: any, insertFn: any) {
         if (res[0].url) {
-          const img = import.meta.env.VITE_HOST_URL + res[0].url
+          const img = import.meta.env.VITE_DMS_HOST + res[0].url
           insertFn(img, '', '')
         }
       },
@@ -119,7 +122,7 @@ const {
     return {
       title: formData.value.title || '',
       subTitle: formData.value.subTitle || '',
-      content: formData.value.content
+      content: formData.value.content,
     }
   })
 )
@@ -144,7 +147,7 @@ const {
       id: props.editId,
       title: formData.value.title || '',
       subTitle: formData.value.subTitle || '',
-      content: formData.value.content
+      content: formData.value.content,
     }
   })
 )
@@ -155,7 +158,7 @@ onSuccessUpdate(() => {
   resetForm()
 })
 onFailUpdate(() => {
-  ElMessage.success('保存失败')
+  ElMessage.error('保存失败')
 })
 const loading = computed(() => {
   return detailLoading.value || createLoading.value || updateLoading.value
@@ -164,6 +167,7 @@ const resetForm = () => {
   formData.value.title = ''
   formData.value.subTitle = ''
   formData.value.content = ''
+  fileList.value = []
   formRef.value && formRef.value.resetFields()
 }
 watch(
@@ -205,12 +209,68 @@ const handleSubmit = () => {
     }
   })
 }
+
+const uploadFileRequest = usePost<any, Attachment[]>('/api/upload')
+
+const customUpload = async (param: { file: any }) => {
+  const fileSize = param.file.size / 1024 / 1024
+  if (fileSize > 30) {
+    ElMessage.warning('文件超过30M')
+    fileList.value = []
+    return
+  }
+  let fileArr
+  // 处理成数组
+  if (param.file instanceof Array) {
+    fileArr = param.file
+  } else {
+    fileArr = [param.file]
+  }
+  try {
+    flieUploading.value = true
+    const formData = new FormData()
+    fileArr.forEach((item: any) => {
+      formData.append('files', item)
+    })
+    const data = await uploadFileRequest({
+      data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+    const resData: any = data.map((item: any) => {
+      return {
+        ...item,
+        url: import.meta.env.VITE_HOST_URL + item.url,
+        status: 'done'
+      }
+    })
+    fileList.value = resData
+  } catch (error) {
+    fileList.value = []
+  } finally {
+    flieUploading.value = false
+  }
+}
+
+const handleRemove = (uploadFile: Attachment) => {
+  if (fileList.value?.length) {
+    const index = fileList.value.findIndex((item) => {
+      return item.url === uploadFile.url
+    })
+    if (index > -1) {
+      fileList.value.splice(index, 1)
+    }
+  }
+}
+
+const handlePreview = (uploadFile: Attachment) => {
+  window.open(uploadFile.url, '_blank')
+}
 </script>
 <template>
   <el-dialog
     v-model="dialogFormVisible"
     :destroy-on-close="true"
-    title="详情"
+    title="文章详情"
     width="1000px"
   >
     <el-form
@@ -254,4 +314,18 @@ const handleSubmit = () => {
   </el-dialog>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+:deep(.upload-box) {
+  width: 100%;
+}
+
+:deep(.upload-disable) {
+  .el-upload {
+    display: none;
+  }
+ 
+  .el-upload-list {
+    margin-top: 0px;
+  }
+}
+</style>

@@ -6,13 +6,14 @@ import { useFetchArticles, useDeleteArticle, Article } from '~/api/article'
 import { usePages } from '~/composables/usePages'
 import CreateArticle from '~/components/CreateArticle.vue'
 import dayjs from 'dayjs'
+import { useRouter } from 'vue-router'
 
 const query = reactive({
   type: '',
   title: '',
   name: ''
 })
-
+const router = useRouter()
 const articleFormVisible = ref(false)
 const articleId = ref()
 
@@ -90,13 +91,16 @@ const handleAdd = () => {
 const handleSuccessArticle = () => {
   handleSearch()
 }
-
+const goHome=()=>{
+  router.push('/')
+}
 
 </script>
 <template>
   <div>
     <div class="container">
-      <h1 class="p-5 text-4xl">My Article</h1>
+      <MyButton class="homeBtn" @click="goHome()">Home</MyButton>
+      <h1 class="pb-20 text-4xl text-gray-400 m-5">My Article</h1>
       <div class="handle-box">
         <span class="input-name">标题名称：</span>
         <el-input
@@ -114,11 +118,6 @@ const handleSuccessArticle = () => {
       <el-table :data="tableData" border ref="multipleTable" class="table-box">
         <el-table-column prop="title" label="标题" align="center">
         </el-table-column>
-        <!-- <el-table-column prop="name" label="类型" align="center">
-          <template #default="scope">
-            {{ getTypeName(scope.row.type) }}
-          </template>
-        </el-table-column> -->
         <el-table-column prop="phone" label="发布日期" align="center">
           <template #default="scope">
             {{ scope.row.createdAt }}
@@ -160,6 +159,11 @@ const handleSuccessArticle = () => {
 </template>
 
 <style scoped>
+.homeBtn{
+  position: fixed !important;
+  top: 20px;
+  left: 20px;
+}
 .container {
   margin: 0 auto;
 }
@@ -169,7 +173,9 @@ const handleSuccessArticle = () => {
 .table-box {
   margin-top: 24px;
 }
-
+.handle-box{
+  text-align: left;
+}
 .handle-input {
   width: 300px;
 }

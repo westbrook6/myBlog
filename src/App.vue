@@ -3,3 +3,8 @@
     <RouterView />
   </main>
 </template>
+<script setup lang="ts">
+onMounted(() => {
+  document.title = `Russell's Blog`
+})
+</script>

@@ -3,7 +3,7 @@
 <template>
     <div class="cards">
 	
-	<div class="contact">Contact Me</div>
+	<div class="contact " >Contact Me</div>
 	<div class="contact-form">
 		<a href="#" class="close"><i class="fa fa-times"></i></a>
 		<form>
@@ -154,8 +154,8 @@ body{
 	border-radius: 5px;
 	overflow: hidden;
 	box-shadow: 0 2px 10px rgba(0,0,0,.1), 3px 5px 20px rgba(0,0,0,.2);
-	width: 768px;
-	height:550px;
+	width: 800px;
+	height:800px;
 	position: relative;
 	display: flex;
 	align-items: flex-end;
